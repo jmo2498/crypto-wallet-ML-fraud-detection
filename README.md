@@ -2,7 +2,7 @@
 
 A real-time, on-chain illicit activity detector that treats blockchain transaction histories as a language.
 
-By translating raw hex data and smart contract interactions into an English-based token sequence (e.g., <TRANSFER> <WHALE> <SWAP>), this project uses Natural Language Processing (NLP) to classify the behavior of Ethereum wallets. The system monitors live mempools for interactions with mixers, bridges, and DEXes, fetches the sender's history, and scores their risk of being a bad actor.
+By translating raw hex data and smart contract interactions into an English-based token sequence (e.g., `<TRANSFER> <WHALE> <SWAP>`), this project uses Natural Language Processing (NLP) to classify the behavior of Ethereum wallets. The system monitors live mempools for interactions with mixers, bridges, and DEXes, fetches the sender's history, and scores their risk of being a bad actor.
 
 ---
 
@@ -11,7 +11,7 @@ By translating raw hex data and smart contract interactions into an English-base
 ![Live Prediction Feed](screenshots/dashboard_feed.png)
 ![Token Sequence View](screenshots/dashboard_tokens.png)
 
-The Streamlit dashboard shows a live prediction feed with per-wallet confidence scores alongside a token sequence inspector ("What the Model Sees") that displays the raw <ACTION> <MAGNITUDE> sequence fed into the model for the most recent prediction.
+The Streamlit dashboard shows a live prediction feed with per-wallet confidence scores alongside a token sequence inspector ("What the Model Sees") that displays the raw `<ACTION> <MAGNITUDE>` sequence fed into the model for the most recent prediction.
 
 ---
 
@@ -21,8 +21,8 @@ Traditional fraud detection relies on hardcoded heuristics. This project instead
 
 - **Dataset:** 26 known Tornado Cash-linked wallets via Dune Analytics, alongside 26 normal baseline wallets sourced from high-volume Uniswap activity
 - **Behavioral Sequencing:** Last 50 transactions per wallet via the Etherscan API - enough context to capture a full "Prep to Action to Exit" flow
-- **Custom Tokenizer:** Translates raw EVM data into <ACTION> <MAGNITUDE> tag sequences, deliberately abstracted away from exact numbers to avoid overfitting
-  - Example: <APPROVAL> <ERC20> <SWAP> <DEX> <OUTFLOW_LARGE>
+- **Custom Tokenizer:** Translates raw EVM data into `<ACTION> <MAGNITUDE>` tag sequences, deliberately abstracted away from exact numbers to avoid overfitting
+  - Example: `<APPROVAL> <ERC20> <SWAP> <DEX> <OUTFLOW_LARGE>`
 - **Model:** Fine-tuned DistilRoBERTa sequence classifier (Hugging Face)
 
 > **PoC Disclaimer:** With only 52 training samples, the model currently performs near chance. The real contribution is the tokenization schema and live pipeline architecture, both designed to scale. A production version would require a dataset orders of magnitude larger.
@@ -36,7 +36,7 @@ Traditional fraud detection relies on hardcoded heuristics. This project instead
 | Malicious Labels | Dune (Tornado Cash) | Known users of obfuscation protocols |
 | Normal Labels | Dune (Uniswap) | High-volume, non-malicious DeFi activity |
 | Transaction Depth | Etherscan (50 txs) | Enough context to see Prep to Action to Exit flow |
-| Tokens/Tags | Custom Logic | Simplified <ACTION> <MAGNITUDE> to avoid overfitting on exact numbers |
+| Tokens/Tags | Custom Logic | Simplified `<ACTION> <MAGNITUDE>` to avoid overfitting on exact numbers |
 
 ---
 
@@ -48,7 +48,7 @@ The model is trained to recognize behavioral patterns associated with money laun
 
 ## Architecture
 
-`
+```text
 Ethereum (Alchemy RPC)
         |
         v
